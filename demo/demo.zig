@@ -1,18 +1,18 @@
 const std = @import("std");
-const sort = @import("sort");
+const algo = @import("algo");
 
 pub fn main() void {
-    const sorter = sort.Sorter(u8).create(sort.SortType.Bubble, compare);
+    const sorter = algo.Sorter(u8).create(algo.SortType.Bubble, compare);
     var elements = [_]u8{ 45, 23, 23, 12, 34, 21, 2, 33 };
     sorter.sort(&elements);
     std.debug.print("Sorted Elements: {any}\n", .{elements});
 }
 
-fn compare(item1: u8, item2: u8) sort.Ordering {
+fn compare(item1: u8, item2: u8) algo.Ordering {
     if (item1 < item2) {
-        return sort.Ordering.Before;
+        return algo.Ordering.Before;
     } else if (item1 > item2) {
-        return sort.Ordering.After;
+        return algo.Ordering.After;
     }
-    return sort.Ordering.Equal;
+    return algo.Ordering.Equal;
 }

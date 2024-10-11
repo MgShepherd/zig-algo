@@ -9,8 +9,8 @@ pub fn build(b: *std.Build) void {
     });
 
     const libsort = b.addSharedLibrary(.{
-        .name = "sort",
-        .root_source_file = b.path("src/sort.zig"),
+        .name = "algo",
+        .root_source_file = b.path("src/algo.zig"),
         .target = target,
         .optimize = optimize,
         .version = .{ .major = 0, .minor = 1, .patch = 1 },
@@ -24,7 +24,7 @@ pub fn build(b: *std.Build) void {
     });
 
     demoexe.linkLibrary(libsort);
-    demoexe.root_module.addImport("sort", module);
+    demoexe.root_module.addImport("algo", module);
 
     b.installArtifact(libsort);
 

@@ -10,23 +10,25 @@ pub fn Sorter(comptime T: type) type {
         compareFn: CompareFn,
         sortType: SortType,
 
-        pub fn create(sortType: SortType, comptime compareFn: CompareFn) Sorter(T) {
+        const Self = @This();
+
+        pub fn create(sortType: SortType, comptime compareFn: CompareFn) Self {
             return .{ .compareFn = compareFn, .sortType = sortType };
         }
 
-        pub fn sort(self: *const @This(), elements: []T, sortType: SortType) void {
-            processSort(self, elements, sortType);
+        pub fn sort(self: *const Self, elements: []T) void {
+            processSort(self, elements);
         }
 
-        fn processSort(self: *const @This(), elements: []T, sortType: SortType) void {
-            switch (sortType) {
+        fn processSort(self: *const Self, elements: []T) void {
+            switch (self.sortType) {
                 .Bubble => bubbleSort(self, elements),
                 .Selection => selectionSort(self, elements),
                 .Insertion => insertionSort(self, elements),
             }
         }
 
-        fn bubbleSort(self: *const @This(), elements: []T) void {
+        fn bubbleSort(self: *const Self, elements: []T) void {
             var i: usize = 0;
             while (i < elements.len - 1) : (i += 1) {
                 var numSwaps: usize = 0;
@@ -41,7 +43,7 @@ pub fn Sorter(comptime T: type) type {
             }
         }
 
-        fn selectionSort(self: *const @This(), elements: []T) void {
+        fn selectionSort(self: *const Self, elements: []T) void {
             var i: usize = 0;
             while (i < elements.len - 1) : (i += 1) {
                 var j: usize = i + 1;
@@ -57,7 +59,7 @@ pub fn Sorter(comptime T: type) type {
             }
         }
 
-        fn insertionSort(self: *const @This(), elements: []T) void {
+        fn insertionSort(self: *const Self, elements: []T) void {
             var i: usize = 1;
             while (i < elements.len) : (i += 1) {
                 var j: usize = i;
