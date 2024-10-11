@@ -26,6 +26,14 @@ pub fn build(b: *std.Build) void {
     demoexe.linkLibrary(libsort);
     demoexe.root_module.addImport("algo", module);
 
+    const testStep = b.step("test", "Run unit tests");
+    const unitTests = b.addTest(.{
+        .root_source_file = b.path("src/algo_test.zig"),
+        .target = b.resolveTargetQuery(.{}),
+    });
+    const runTests = b.addRunArtifact(unitTests);
+    testStep.dependOn(&runTests.step);
+
     b.installArtifact(libsort);
 
     if (b.option(bool, "enable-demo", "install the library demo") orelse false) {

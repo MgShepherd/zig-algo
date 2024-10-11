@@ -9,7 +9,7 @@ test "should sort i32 array" {
 
     inline for ([_]sorting.SortType{ .Bubble, .Selection, .Insertion }) |sortType| {
         const sorter = sorting.Sorter(i32).create(sortType, customCompare);
-        sorter.sort(&elements, sortType);
+        sorter.sort(&elements);
 
         try testing.expectEqual(expectedElements, elements);
     }
@@ -21,7 +21,7 @@ test "should sort u64 array" {
 
     inline for ([_]sorting.SortType{ .Bubble, .Selection, .Insertion }) |sortType| {
         const sorter = sorting.Sorter(u64).create(sortType, customU64Compare);
-        sorter.sort(&elements, sortType);
+        sorter.sort(&elements);
 
         try testing.expectEqual(expectedElements, elements);
     }
