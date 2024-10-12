@@ -20,6 +20,14 @@ pub fn Sorter(comptime T: type) type {
             processSort(self, elements);
         }
 
+        pub fn sortWithTimings(self: *const Self, elements: []T) i128 {
+            const startTime = std.time.nanoTimestamp();
+            processSort(self, elements);
+            const endTime = std.time.nanoTimestamp();
+
+            return endTime - startTime;
+        }
+
         fn processSort(self: *const Self, elements: []T) void {
             switch (self.sortType) {
                 .Bubble => bubbleSort(self, elements),

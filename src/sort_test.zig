@@ -27,6 +27,17 @@ test "should sort u64 array" {
     }
 }
 
+test "should return duration when sorting with timings" {
+    var elements = [_]u64{ 10, 3, 78, 34, 2 };
+    const expectedElements = [_]u64{ 2, 3, 10, 34, 78 };
+
+    const sorter = sorting.Sorter(u64).create(.Bubble, customU64Compare);
+    const duration = sorter.sortWithTimings(&elements);
+
+    try testing.expectEqual(expectedElements, elements);
+    try testing.expect(duration >= 0);
+}
+
 fn customCompare(item1: i32, item2: i32) sorting.Ordering {
     if (item1 < item2) {
         return sorting.Ordering.Before;
